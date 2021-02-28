@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+}
+
+
+plugins {
+    id 'java'
+    id "org.unbroken-dome.xjc" version "2.0.0"
+}
+
+
+group 'com.github.olafj'
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation "javax.xml.bind:jaxb-api:2.3.0"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes("Built-By": System.getProperty("user.name"))
+        attributes(["Specification-Title": project.name,
+                    "Specification-Version": project.version,
+                    "Implementation-Title": project.name,
+                    "Implementation-Version": project.version,
+                    "Implementation-Vendor" :"Olaf Jantz",
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                    "Git-Commit": project.repo ? project.repo.head().getAbbreviatedId(8) : "<unknown>",
+                    "Git-Branch": project.repo ? project.repo.branch.getCurrent().getName() : "<unknown>" ])
+    }
+    from sourceSets.main.output
+}
